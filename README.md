@@ -1,10 +1,13 @@
-**Architectural Pattern:**
+# **NWeather**
+
+### **Architectural Pattern:**
+
 App's design is built with **MVVM pattern** and **offline-first app**.
 
 - **MVVM pattern:**
   - **V**: UI (Activity, Fragment).
   - **VM**: ViewModel contains LiveData(app's state), V(UI) observes these states.
-  - **M**: Model and business logic(Repository, Dao Room, API network call).
+  - **M**: Model and business logic(Pure data model, Repository, Dao Room, API network call).
 
 - **Offline-first(cache support):**
   - App always firstly get data (weather forecast) from local database(Room database).
@@ -17,7 +20,9 @@ App's design is built with **MVVM pattern** and **offline-first app**.
 - **Cache database schema:**
   - There is one table to persist result return from network request with updated datetime, URL will be primary key in this table. With this schema for cache storage will may be avoid some migration tasks for database.
 
-**Code Folder Structure:**
+### **Code Folder Structure:**
+![Capture](https://user-images.githubusercontent.com/29654535/180672618-9fdb2e15-ae27-4c8e-a311-fe9a4e21fe5f.PNG)
+
 - **.data**: **.disk** contains implementation for reading/writing data to local database, **.network** contains implementation for network
   api call.
 - **.di**: contains dependency injection.
@@ -28,7 +33,8 @@ App's design is built with **MVVM pattern** and **offline-first app**.
 - **.util**: contains util classes and files for datetime formatter, default value
 - **.viewmodel**: contains common viewmodel classes.
 
-**Library & Feature:**
+### **Library & Feature:**
+
 - **Koin**: to inject dependency.
 - **Retrofit + okhttp**: to call network api.
 - **Room**: to persist cache.
@@ -43,10 +49,12 @@ App's design is built with **MVVM pattern** and **offline-first app**.
 - **JUnit + mockk**: to write unit test
 - **desugar_jdk_libs**: to support Java 8+ API, to use java.time.* instead of ThreeTen library
 
-**Compatibility:**
+### **Compatibility:**
+
 - minSdk 21, targetSdk 32, Kotlin AndroidX
 
-**Functionalities:**
+###  **Functionalities:**
+
 - [x] The application is a simple Android application which is written by Java/Kotlin.
 - [x] The application is able to retrieve the weather information from OpenWeatherMaps API.
 - [x] The application is able to allow user to input the searching term.
@@ -58,7 +66,8 @@ App's design is built with **MVVM pattern** and **offline-first app**.
 - [ ] The application is able to support the disability to scale large text for who can't see the text clearly.
 - [ ] The application is able to support the disability to read out the text using VoiceOver controls.
 
-**Expected Outputs**
+### **Expected Outputs**
+
 - [x] 1. Programming language: Kotlin is required, Java is optional.
 - [x] 2. Design app's architecture (suggest MVVM)
 - [x] 3. Apply LiveData mechanism
