@@ -1,0 +1,12 @@
+<resources>
+    <string name="get_weather">Get Weather</string>
+    <string name="type_name_city">Type city name…</string>
+    <string name="date">Date:</string>
+    <string name="temperature_average">Average temperature:</string>
+    <string name="pressure">Pressure:</string>
+    <string name="humidity">Humidity:</string>
+    <string name="description">Description:</string>
+    <string name="percentage">%</string>
+    <string name="celsius">°C</string>
+    <string name="comma">,</string>
+</resources>

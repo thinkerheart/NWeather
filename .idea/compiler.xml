@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="NWeather.app" target="11" />
+      <module name="NWeather.core-common" target="11" />
+      <module name="NWeather.core-data" target="11" />
+      <module name="NWeather.core-database" target="11" />
+      <module name="NWeather.core-network" target="11" />
+      <module name="NWeather.core-ui" target="11" />
+      <module name="NWeather.feature-city-weather-forecast" target="11" />
+      <module name="NWeather.test" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,7 +1,7 @@
 package com.ngocthanhnguyen.nweather.screen
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.ngocthanhnguyen.nweather.model.Response
+import com.ngocthanhnguyen.core.domain.entity.Response
 import com.ngocthanhnguyen.nweather.util.getOrAwaitValue
 import io.mockk.mockk
 import org.junit.Assert.*
@@ -20,6 +20,6 @@ class WeatherForecastViewModelTest {
     fun resetState() {
         weatherForecastViewModel.resetState()
         assertEquals(weatherForecastViewModel.error.getOrAwaitValue(), null)
-        assertTrue(weatherForecastViewModel.weatherForecast.getOrAwaitValue() is Response.Uninitialized)
+        assertTrue(weatherForecastViewModel.weatherForecast.getOrAwaitValue() is com.ngocthanhnguyen.core.domain.entity.Response.Uninitialized)
     }
 }

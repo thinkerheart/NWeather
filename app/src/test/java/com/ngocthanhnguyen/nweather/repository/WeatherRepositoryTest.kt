@@ -11,19 +11,24 @@ import org.koin.test.get
 
 class WeatherRepositoryTest: KoinTest {
 
-    private lateinit var weatherRepository: WeatherRepository
+    private lateinit var weatherRepository: com.ngocthanhnguyen.core.data.repository.WeatherRepository
 
     @get:Rule
     val koinTestRule = KoinTestRule.create {
         modules(appModule)
-        weatherRepository = WeatherRepository(mockk(), mockk(), mockk(), get())
+        weatherRepository = com.ngocthanhnguyen.core.data.repository.WeatherRepository(
+            mockk(),
+            mockk(),
+            mockk(),
+            get()
+        )
     }
 
     @Test
     fun isOutdatedWeather() {
-        var millis = System.currentTimeMillis() - WeatherRepository.WEATHER_FORECAST_DATA_EXPIRATION
+        var millis = System.currentTimeMillis() - com.ngocthanhnguyen.core.data.repository.WeatherRepository.WEATHER_FORECAST_DATA_EXPIRATION
         assertEquals(weatherRepository.isOutdatedWeather(millis), false)
-        millis = System.currentTimeMillis() - WeatherRepository.WEATHER_FORECAST_DATA_EXPIRATION - 100
+        millis = System.currentTimeMillis() - com.ngocthanhnguyen.core.data.repository.WeatherRepository.WEATHER_FORECAST_DATA_EXPIRATION - 100
         assertEquals(weatherRepository.isOutdatedWeather(millis), true)
     }
 

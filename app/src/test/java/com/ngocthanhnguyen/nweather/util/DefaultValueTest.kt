@@ -1,5 +1,6 @@
 package com.ngocthanhnguyen.nweather.util
 
+import com.ngocthanhnguyen.core.domain.util.defaultIfNull
 import org.junit.Assert.*
 
 import org.junit.Test
@@ -16,6 +17,6 @@ class DefaultValueTest {
 
     @Test
     fun emptyString_is_empty() {
-        assertEquals(emptyString(), "")
+        assertEquals(com.ngocthanhnguyen.core.domain.util.emptyString(), "")
     }
 }

@@ -14,3 +14,10 @@ dependencyResolutionManagement {
 }
 rootProject.name = "NWeather"
 include ':app'
+include ':core-domain'
+include ':core-data'
+include ':core-network'
+include ':core-database'
+include ':core-ui'
+include ':feature-city-weather-forecast'
+include ':core-common'

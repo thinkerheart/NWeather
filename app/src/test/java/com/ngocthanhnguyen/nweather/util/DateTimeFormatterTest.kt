@@ -10,7 +10,7 @@ import org.koin.test.inject
 
 class DateTimeFormatterTest: KoinTest {
 
-    private val dateTimeFormatter: DateTimeFormatter by inject()
+    private val dateTimeFormatter: com.ngocthanhnguyen.core.domain.util.DateTimeFormatter by inject()
 
     @get:Rule
     val koinTestRule = KoinTestRule.create {
