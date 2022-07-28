@@ -6,5 +6,5 @@ import org.koin.dsl.module
 
 val coreDatabaseModule = module {
     single { createAppDatabase(get()) }
-    single { (get() as AppDatabase).apiCallResultDao() }
+    single { (get() as AppDatabase).dbWeatherForecastDao() }
 }

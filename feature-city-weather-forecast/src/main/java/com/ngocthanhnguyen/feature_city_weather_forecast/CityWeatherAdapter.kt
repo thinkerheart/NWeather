@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ngocthanhnguyen.core.common.util.DateTimeFormatter
-import com.ngocthanhnguyen.core.common.util.emptyString
-import com.ngocthanhnguyen.core.domain.entity.DayWeather
 import com.ngocthanhnguyen.core.domain.entity.Response
+import com.ngocthanhnguyen.feature_city_weather_forecast.mapper.toUiWeatherForecast
+import com.ngocthanhnguyen.feature_city_weather_forecast.model.UiDayWeather
 
 class CityWeatherAdapter(
-    var dayWeatherList: List<DayWeather>,
+    var dayWeatherList: List<UiDayWeather>,
     private val context: Context,
     private val dateTimeFormatter: DateTimeFormatter,
     private val cityWeatherViewModel: CityWeatherViewModel
@@ -38,66 +38,50 @@ class CityWeatherAdapter(
         return dayWeatherList.size
     }
 
-    private fun bindDateView(holder: ViewHolder, dayWeather: DayWeather) {
+    private fun bindDateView(holder: ViewHolder, uiDayWeather: UiDayWeather) {
         val weatherForecast = cityWeatherViewModel.weatherForecast.value
         if (weatherForecast is Response.Success) {
-            val datetime = dayWeather.datetime
-            val timezone = weatherForecast.data.city?.timezone
-            if (datetime != null && timezone != null) {
-                holder.txvDate.text = "${
-                    context.getString(R.string.date)
-                } ${
-                    dateTimeFormatter.epochToLocalDateTimePattern1(datetime, timezone)
-                }"
-            }
+            val uiWeatherForecast = weatherForecast.data.toUiWeatherForecast(context)
+            val datetime = uiDayWeather.datetime
+            val timezone = uiWeatherForecast.cityTimezone
+            holder.txvDate.text = "${
+                context.getString(R.string.date)
+            } ${
+                dateTimeFormatter.epochToLocalDateTimePattern1(datetime, timezone)
+            }"
         }
     }
-    private fun bindTemperatureView(holder: ViewHolder, dayWeather: DayWeather) {
+    private fun bindTemperatureView(holder: ViewHolder, uiDayWeather: UiDayWeather) {
         holder.txvAverageTemperature.text = "${
             context.getString(R.string.temperature_average)
         } ${
-            dayWeather.temp?.dayTemp.toString()
+            uiDayWeather.dayTemp
         }${
             context.getString(R.string.celsius)
         }"
     }
-    private fun bindPressureView(holder: ViewHolder, dayWeather: DayWeather) {
+    private fun bindPressureView(holder: ViewHolder, uiDayWeather: UiDayWeather) {
         holder.txvPressure.text = "${
             context.getString(R.string.pressure)
         } ${
-            dayWeather.pressure.toString()
+            uiDayWeather.pressure
         }"
     }
-    private fun bindHumidityView(holder: ViewHolder, dayWeather: DayWeather) {
+    private fun bindHumidityView(holder: ViewHolder, uiDayWeather: UiDayWeather) {
         holder.txvHumidity.text = "${
             context.getString(R.string.humidity)
         } ${
-            dayWeather.humidity.toString()
+            uiDayWeather.humidity
         }${
             context.getString(R.string.percentage)
         }"
     }
-    private fun bindDescriptionView(holder: ViewHolder, dayWeather: DayWeather) {
+    private fun bindDescriptionView(holder: ViewHolder, uiDayWeather: UiDayWeather) {
         holder.txvDescription.text = "${
             context.getString(R.string.description)
         } ${
-            getWeatherDescription(dayWeather)
+            uiDayWeather.description
         }"
-    }
-
-    private fun getWeatherDescription(dayWeather: DayWeather): String {
-        var description = emptyString()
-        dayWeather.weather.let {
-            if (it.isNotEmpty()) {
-                it.forEach {
-                    description += if (description.isEmpty())
-                        it.description
-                    else
-                        "${context.getString(R.string.comma)} ${it.description}"
-                }
-            }
-        }
-        return description
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

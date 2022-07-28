@@ -6,11 +6,7 @@ import retrofit2.http.Query
 
 interface WeatherForecastApi {
 
-    companion object {
-        const val dailyForecast = "forecast/daily"
-    }
-
-    @GET(dailyForecast)
+    @GET("forecast/daily")
     suspend fun getWeatherForecast(
         @Query("q") cityName: String,
         @Query("cnt") numberOfForecastDays: Int,

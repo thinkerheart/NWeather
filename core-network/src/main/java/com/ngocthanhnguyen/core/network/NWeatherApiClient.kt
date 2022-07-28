@@ -13,10 +13,7 @@ import java.util.concurrent.TimeUnit
 
 class NWeatherApiClient {
     companion object {
-        const val scheme = "https"
-        const val host = "api.openweathermap.org"
-        const val pathSegment = "data/2.5"
-        const val baseUrl = "$scheme://$host/$pathSegment/"
+        const val baseUrl = "https://api.openweathermap.org/data/2.5/"
         const val appId = "60c6fbeb4b93ac653c492ba806fc346d"
         const val connectTimeoutSecond = 15L
         const val readTimeoutSecond = 30L

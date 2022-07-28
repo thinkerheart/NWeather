@@ -2,15 +2,15 @@ package com.ngocthanhnguyen.core.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.ngocthanhnguyen.core.database.dao.APICallResultDao
-import com.ngocthanhnguyen.core.database.model.APICallResult
+import com.ngocthanhnguyen.core.database.dao.DbWeatherForecastDao
+import com.ngocthanhnguyen.core.database.model.DbWeatherForecast
 
 @Database(
     entities = [
-        APICallResult::class
+        DbWeatherForecast::class
     ],
-    version = 1
+    version = 2
 )
 abstract class AppDatabase: RoomDatabase() {
-    abstract fun apiCallResultDao(): APICallResultDao
+    abstract fun dbWeatherForecastDao(): DbWeatherForecastDao
 }

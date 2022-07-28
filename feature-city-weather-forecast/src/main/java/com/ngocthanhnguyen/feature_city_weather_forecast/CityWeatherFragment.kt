@@ -10,6 +10,8 @@ import com.ngocthanhnguyen.core.common.util.DateTimeFormatter
 import com.ngocthanhnguyen.core.common.util.defaultIfNull
 import com.ngocthanhnguyen.core.domain.entity.Response
 import com.ngocthanhnguyen.feature_city_weather_forecast.databinding.FragmentWeatherBinding
+import com.ngocthanhnguyen.feature_city_weather_forecast.mapper.toUiDayWeathers
+import com.ngocthanhnguyen.feature_city_weather_forecast.mapper.toUiWeatherForecast
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.debounce
@@ -46,8 +48,8 @@ class CityWeatherFragment : Fragment(R.layout.fragment_weather) {
 
         fragmentWeatherBinding?.rcvWeather?.adapter = weatherAdapter
 
-        cityWeatherViewModel.weatherForecast.observe(viewLifecycleOwner) {
-            when (it) {
+        cityWeatherViewModel.weatherForecast.observe(viewLifecycleOwner) { weatherForecastResponse ->
+            when (weatherForecastResponse) {
                 is Response.Uninitialized -> {
                     weatherAdapter?.dayWeatherList = emptyList()
                     weatherAdapter?.notifyDataSetChanged()
@@ -56,11 +58,13 @@ class CityWeatherFragment : Fragment(R.layout.fragment_weather) {
                     // may be show UI loader
                 }
                 is Response.Success -> {
-                    weatherAdapter?.dayWeatherList = it.data.dayWeathers
-                    weatherAdapter?.notifyDataSetChanged()
+                    activity?.let {
+                        weatherAdapter?.dayWeatherList = weatherForecastResponse.data.toUiWeatherForecast(it).dayWeathers
+                        weatherAdapter?.notifyDataSetChanged()
+                    }
                 }
                 is Response.Error -> {
-                    cityWeatherViewModel.error.value = it.errorValue
+                    cityWeatherViewModel.error.value = weatherForecastResponse.errorValue
                 }
             }
 
@@ -79,7 +83,6 @@ class CityWeatherFragment : Fragment(R.layout.fragment_weather) {
                 cityWeatherViewModel.searchKeyword.value = it
                 if (it.length >= 3) {
                     cityWeatherViewModel.getWeatherForecast(
-                        lifecycleScope,
                         cityWeatherViewModel.searchKeyword.value.defaultIfNull(),
                         7,
                         com.ngocthanhnguyen.core.common.enum.TemperatureUnit.CELSIUS.code

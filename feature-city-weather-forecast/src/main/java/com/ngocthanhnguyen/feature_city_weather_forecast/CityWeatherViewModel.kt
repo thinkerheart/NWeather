@@ -1,12 +1,11 @@
 package com.ngocthanhnguyen.feature_city_weather_forecast
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.ngocthanhnguyen.core.domain.entity.Response
 import com.ngocthanhnguyen.core.domain.entity.WeatherForecast
-import com.ngocthanhnguyen.core.domain.repository.IWeatherRepository
 import com.ngocthanhnguyen.core.domain.usecase.GetCityWeatherUseCase
 import com.ngocthanhnguyen.core.ui.viewmodel.BaseViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.flowOn
@@ -19,12 +18,10 @@ class CityWeatherViewModel(
     val weatherForecast = MutableLiveData<Response<WeatherForecast>>()
     val searchKeyword = MutableLiveData<String>()
 
-    fun getWeatherForecast(
-        coroutineScope: CoroutineScope, cityName: String, numberOfForecastDays: Int, units: String
-    ) {
+    fun getWeatherForecast(cityName: String, numberOfForecastDays: Int, units: String) {
         searchJob?.cancel()
         resetState()
-        searchJob = coroutineScope.launch {
+        searchJob = viewModelScope.launch {
             try {
                 weatherForecast.value = Response.Loading()
                 getCityWeatherUseCase.execute(
