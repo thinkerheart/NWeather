@@ -7,13 +7,14 @@ import com.ngocthanhnguyen.core.database.model.DbWeatherForecast
 import com.ngocthanhnguyen.core.domain.entity.Response
 import com.ngocthanhnguyen.core.domain.entity.WeatherForecast
 import com.ngocthanhnguyen.core.domain.repository.IWeatherRepository
-import com.ngocthanhnguyen.core.network.api.WeatherForecastApiClient
+import com.ngocthanhnguyen.core.network.api.WeatherForecastApi
+import com.ngocthanhnguyen.core.network.mapper.toWeatherForecast
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.flow.*
 
 class WeatherRepository(
     private val dbWeatherForecastDao: DbWeatherForecastDao,
-    private val weatherForecastApiClient: WeatherForecastApiClient,
+    private val weatherForecastApi: WeatherForecastApi,
     private val moshi: Moshi,
     private val dateTimeProvider: DateTimeProvider
 ) : IWeatherRepository {
@@ -58,9 +59,9 @@ class WeatherRepository(
     ): Flow<Response<WeatherForecast>> {
         return flow {
             emit(
-                Response.Success(weatherForecastApiClient.getWeatherForecast(
+                Response.Success(weatherForecastApi.getWeatherForecast(
                     cityName, numberOfForecastDays, units
-                )) as Response<WeatherForecast>
+                ).toWeatherForecast()) as Response<WeatherForecast>
             )
         }.catch {
             emit(Response.Error(it.localizedMessage.defaultIfNull()))

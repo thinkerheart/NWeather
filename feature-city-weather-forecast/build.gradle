@@ -47,6 +47,11 @@ dependencies {
 
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
 
+    // Mockk framework
+    testImplementation "io.mockk:mockk:$mockk_version"
+
+    testImplementation "androidx.arch.core:core-testing:$arch_testing_version"
+
     // Koin main features for Android
     implementation "io.insert-koin:koin-android:$koin_version"
     // Java Compatibility

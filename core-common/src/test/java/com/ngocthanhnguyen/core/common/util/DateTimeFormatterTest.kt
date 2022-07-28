@@ -1,20 +1,21 @@
-package com.ngocthanhnguyen.nweather.util
+package com.ngocthanhnguyen.core.common.util
 
-import com.ngocthanhnguyen.nweather.di.appModule
-import org.junit.Assert.assertEquals
+import com.ngocthanhnguyen.core.common.di.coreCommonModule
+import org.junit.Assert.*
 import org.junit.Rule
+
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
 import org.koin.test.inject
 
-class DateTimeFormatterTest: KoinTest {
+class DateTimeFormatterTest : KoinTest {
 
-    private val dateTimeFormatter: com.ngocthanhnguyen.core.domain.util.DateTimeFormatter by inject()
+    private val dateTimeFormatter: DateTimeFormatter by inject()
 
     @get:Rule
     val koinTestRule = KoinTestRule.create {
-        modules(appModule)
+        modules(coreCommonModule)
     }
 
     @Test

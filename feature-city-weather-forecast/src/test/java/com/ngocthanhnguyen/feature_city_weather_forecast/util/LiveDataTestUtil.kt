@@ -1,4 +1,4 @@
-package com.ngocthanhnguyen.nweather.util
+package com.ngocthanhnguyen.feature_city_weather_forecast.util
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
