@@ -2,12 +2,9 @@
 
 ### **Architectural Pattern:**
 
-App's design is built with **MVVM pattern** and **offline-first app**.
+App's design is built with **Clean Architecture + MVVM with Modularization by Feature instead of Clean Architecture with Monolithic architecture**. App works like **offline-first app**.
 
-- **MVVM pattern:**
-  - **V**: UI (Activity, Fragment).
-  - **VM**: ViewModel contains LiveData(app's state), V(UI) observes these states.
-  - **M**: Model and business logic(Pure data model, Repository, Dao Room, API network call).
+App implemented the functionality to retrieve weather forecast as suppose as  this functionality will be shared between many features. This implementation try to illustrate modularization when some features have same some functionalities in the project.
 
 - **Offline-first(cache support):**
   - App always firstly get data (weather forecast) from local database(Room database).
@@ -18,20 +15,24 @@ App's design is built with **MVVM pattern** and **offline-first app**.
     - if cache is not outdated yet -> show cache to UI
     - if cache is outdated -> fetch data from network, update cache, show to UI like above.
 - **Cache database schema:**
-  - There is one table to persist result return from network request with updated datetime, URL will be primary key in this table. With this schema for cache storage will may be avoid some migration tasks for database.
+  - There is one table to persist weather forecast information by city id with updated datetime, city id will be primary key. In this table, there is one column that contains weather forecast data is serialized from a pure data object of "domain" layer (in Clean Archi: each layer have its separated pure data model and have some mappers in the middle of their pure data model), because this pure data object is in "domain" layer(business logic) so it only contains necessary information for cache, not persist all information return from network like previous version.
 
 ### **Code Folder Structure:**
-![Capture](https://user-images.githubusercontent.com/29654535/180672618-9fdb2e15-ae27-4c8e-a311-fe9a4e21fe5f.PNG)
 
-- **.data**: **.disk** contains implementation for reading/writing data to local database, **.network** contains implementation for network
-  api call.
-- **.di**: contains dependency injection.
-- **.enum**: contains enums.
-- **.model**: contains pure data model.
-- **.repository**: contains implementation for data repository, offline-first mechanism.
-- **.screen**: contains UI classes and files like Fragment with its ViewModel.
-- **.util**: contains util classes and files for datetime formatter, default value
-- **.viewmodel**: contains common viewmodel classes.
+- **Note:**
+  - Clean Archi implementation is put in **core-data**, **core-database**, **core-network**, **core-ui**, **core-domain** **module** when it implement **a functionality that will be shared for many features**. If a functionality serve only for one feature so all Clean Arch implementation(domain, data, device, ui... layers) of this functionality should put in that feature module, should not put here.
+  - **Dependency rule between modules:**
+    - One **feature** module should not know another feature module. It know only **core-** module
+    - **core-** module should not know any **feature** module. It know only another **core-** module
+- App' **modules**:
+  - **app**: connects components together required for the app to function correctly(Dependency injection initialization, MainActivity, Application class, app-level navigation...)
+  - **core-domain**: contains classes of "**domain**" layer in Clean Archi, **abstract business logic(entity, usecase, repository interface).**
+  - **core-data**:  contains classes of "**data**" layer in Clean Archi, **abstract fetching app data (from disk or network)** and **cache mechanism**.
+  - **core-database**: contains classes of "**data**" layer in Clean Archi, contains local database storage using Room.
+  - **core-network**: contains classes of "**data**" layer in Clean Archi, making network requests and handling responses from a remote data source.
+  - **core-ui**: contains classes of "**ui**" layer in Clean Archi, contains UI components, composables and resources, such as icons used by different features.
+  - **feature-city-weather-forecast**: implement weather forecast feature.
+  - **core-common**: contains common classes shared between modules(util, helper...)
 
 ### **Library & Feature:**
 
@@ -42,16 +43,18 @@ App's design is built with **MVVM pattern** and **offline-first app**.
 - **ViewBinding**: to do not need use findViewById()
 - **LiveData**: to keep app's state (LiveData is a regular observable + lifecycle-aware)
 - **Kotlin Coroutine**: to execute asynchronous tasks.
-- **Kotlin Flow**: to receive and custom multiple values emitted from source(reactive programming) by using their operator set. This app
-  can also be implemented by using "suspend function" but with Flow is
-  helpful in some cases like real-time database observation and have a
-  rich operator set to apply on data emitted from source
+- **Kotlin Flow**: to receive and custom multiple values emitted from source(reactive programming) by using their operator set. This app can also be implemented by using "suspend function" but with Flow is helpful in some cases like real-time database observation and have a rich operator set to apply on data emitted from source
 - **JUnit + mockk**: to write unit test
 - **desugar_jdk_libs**: to support Java 8+ API, to use java.time.* instead of ThreeTen library
 
 ### **Compatibility:**
 
 - minSdk 21, targetSdk 32, Kotlin AndroidX
+
+###  **Improvement:**
+
+- Setup a best practice for build system configuration that work
+  efficiently for modularization by feature.
 
 ###  **Functionalities:**
 
