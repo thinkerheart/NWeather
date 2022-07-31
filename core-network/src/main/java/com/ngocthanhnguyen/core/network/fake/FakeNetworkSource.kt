@@ -2,7 +2,7 @@ package com.ngocthanhnguyen.core.network.fake
 
 import com.ngocthanhnguyen.core.network.model.*
 
-object FakeDataSource {
+object FakeNetworkSource {
     fun testNetWeatherForecast(): NetWeatherForecast {
         val netCoord = NetCoord(106.6667, 10.8333)
         val netCity = NetCity(

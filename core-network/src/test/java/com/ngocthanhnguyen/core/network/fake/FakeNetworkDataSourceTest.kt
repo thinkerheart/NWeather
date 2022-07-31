@@ -1,6 +1,6 @@
 package com.ngocthanhnguyen.core.network.fake
 
-import com.ngocthanhnguyen.core.network.fake.FakeDataSource.testNetWeatherForecast
+import com.ngocthanhnguyen.core.network.fake.FakeNetworkSource.testNetWeatherForecast
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi

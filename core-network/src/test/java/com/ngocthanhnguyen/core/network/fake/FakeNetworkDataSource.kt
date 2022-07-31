@@ -10,6 +10,6 @@ class FakeNetworkDataSource(private val moshi: Moshi) : NetworkWeatherDataSource
         numberOfForecastDays: Int,
         units: String
     ): NetWeatherForecast? {
-        return moshi.adapter(NetWeatherForecast::class.java).fromJson(FakeDataSource.sampleNetWeatherForecast)
+        return moshi.adapter(NetWeatherForecast::class.java).fromJson(FakeNetworkSource.sampleNetWeatherForecast)
     }
 }

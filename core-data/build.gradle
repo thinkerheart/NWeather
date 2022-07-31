@@ -37,6 +37,7 @@ dependencies {
     implementation(project(":core-common"))
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
 
     // Mockk framework
     testImplementation "io.mockk:mockk:$mockk_version"

@@ -47,6 +47,8 @@ dependencies {
 
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
 
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+
     // Mockk framework
     testImplementation "io.mockk:mockk:$mockk_version"
 

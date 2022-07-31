@@ -54,7 +54,7 @@ class WeatherRepository(
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun fetchWeatherAndPersistIt(
+    fun fetchWeatherAndPersistIt(
         cityName: String, numberOfForecastDays: Int, units: String
     ): Flow<Response<WeatherForecast>> {
         return flow {

@@ -10,7 +10,6 @@ import com.ngocthanhnguyen.core.common.util.DateTimeFormatter
 import com.ngocthanhnguyen.core.common.util.defaultIfNull
 import com.ngocthanhnguyen.core.domain.entity.Response
 import com.ngocthanhnguyen.feature_city_weather_forecast.databinding.FragmentWeatherBinding
-import com.ngocthanhnguyen.feature_city_weather_forecast.mapper.toUiDayWeathers
 import com.ngocthanhnguyen.feature_city_weather_forecast.mapper.toUiWeatherForecast
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
